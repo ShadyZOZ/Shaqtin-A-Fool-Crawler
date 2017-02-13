@@ -11,6 +11,6 @@ links = soup.tbody.find_all('a', 'pl-video-title-link')
 
 url_list = [host + link['href'].split('&')[0] for link in links]
 
-with open('urls.txt', 'wb+') as f:
+with open('urls.txt', 'w+') as f:
     for link in links:
         f.write(host + link['href'].split('&')[0])

@@ -9,5 +9,7 @@ soup = BeautifulSoup(r.content)
 
 links = soup.tbody.find_all('a', 'pl-video-title-link')
 
-for link in links:
-    print(host + link['href'])
+url_list = [host + link['href'].split('&')[0] for link in links]
+
+with open('urls.txt', 'wb') as f:
+    f.writelines(url_list)

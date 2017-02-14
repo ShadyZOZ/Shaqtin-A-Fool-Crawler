@@ -1,11 +1,11 @@
-from .crawler import crawl
-from .db import VideoUrl
-from .downloader import download_video
+from crawler import crawl
+from db import VideoUrl
+from downloader import download_video
 
 
 def download_url():
-    for url in VideoUrl.objects(uploaded=False):
-        print(download_video(url))
+    for vdeo_url in VideoUrl.objects(uploaded=False):
+        print(download_video(vdeo_url.url))
 
 
 def main():

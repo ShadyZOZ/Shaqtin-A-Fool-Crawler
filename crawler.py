@@ -1,15 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
 
+from db import VideoUrl
 host = 'https://www.youtube.com'
 url = 'https://www.youtube.com/playlist?list=PLU6BYY1Lu_feVbuZEscpd6xT32zCrVrev'
 r = requests.get(url)
 
-soup = BeautifulSoup(r.content)
+soup = BeautifulSoup(r.content, 'html.parser')
 
 links = soup.tbody.find_all('a', 'pl-video-title-link')
 
 url_list = [host + link['href'].split('&')[0] + '\n' for link in links]
 
-with open('urls.txt', 'w+') as f:
-    f.writelines(url_list)
+for url in url_list:
+    try:
+        v = VideoUrl(url=url)
+        v.save()
+    except Exception as e:
+        print(e)
+        break

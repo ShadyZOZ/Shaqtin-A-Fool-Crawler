@@ -10,6 +10,7 @@ def download_url():
         uploader(key)
         video_url.uploaded = True
         video_url.name = key
+        video_url.save()
 
 
 def main():

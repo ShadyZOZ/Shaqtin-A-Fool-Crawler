@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
 import os
+import subprocess
 
-from qiniu import Auth, put_file, etag, urlsafe_base64_encode
-import qiniu.config
-
-from settings import ACCESS_KEY, SECRET_KEY, BUCKET_NAME
+from settings import ACCESS_KEY, BUCKET_NAME, SECRET_KEY
 
 
 def uploader(key):
-    print(key)
-    q = Auth(ACCESS_KEY, SECRET_KEY)
-    token = q.upload_token(BUCKET_NAME, key, 3600)
     localfile = os.path.join(os.getcwd(), 'videos', key)
-    print('localfile', localfile)
-    ret, info = put_file(token, key, localfile)
-    print(info)
-    assert ret['key'] == key
-    assert ret['hash'] == etag(localfile)
+    try:
+        subprocess.call(['./qshell', 'account', ACCESS_KEY, SECRET_KEY])
+        subprocess.call(['./qshell', 'rput', BUCKET_NAME, key, localfile])
+        print('{0} upload finished'.format(key))
+    except Exception as e:
+        print('{0} upload failed: {1}'.format(key, e))

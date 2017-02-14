@@ -89,3 +89,4 @@ ENV/
 .ropeproject
 
 db/settings.py
+settings.py

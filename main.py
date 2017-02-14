@@ -8,6 +8,8 @@ def download_url():
     for video_url in VideoUrl.objects(uploaded=False):
         key = download_video(video_url.url)
         uploader(key)
+        video_url.uploaded = True
+        video_url.name = key
 
 
 def main():

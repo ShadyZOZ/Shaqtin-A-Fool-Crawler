@@ -1,15 +1,13 @@
 from crawler import crawl
 from db import VideoUrl
 from downloader import download_video
-from uploader import Uploader
-
-uploader = Uploader()
+from uploader import uploader
 
 
 def download_url():
     for vdeo_url in VideoUrl.objects(uploaded=False):
         filename = download_video(vdeo_url.url)
-        uploader.upload(filename + '.mp4')
+        uploader(filename + '.mp4')
 
 
 def main():

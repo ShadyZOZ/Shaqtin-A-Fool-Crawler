@@ -7,13 +7,11 @@ import qiniu.config
 from settings import ACCESS_KEY, SECRET_KEY, BUCKET_NAME
 
 
-class Uploader():
+def uploader(key):
     q = Auth(ACCESS_KEY, SECRET_KEY)
-
-    def upload(key):
-        token = q.upload_token(BUCKET_NAME, key, 3600)
-        localfile = '/videos/' + key
-        ret, info = put_file(token, key, localfile)
-        print(info)
-        assert ret['key'] == key
-        assert ret['hash'] == etag(localfile)
+    token = q.upload_token(BUCKET_NAME, key, 3600)
+    localfile = '/videos/' + key
+    ret, info = put_file(token, key, localfile)
+    print(info)
+    assert ret['key'] == key
+    assert ret['hash'] == etag(localfile)

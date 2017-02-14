@@ -5,8 +5,8 @@ from uploader import uploader
 
 
 def download_url():
-    for vdeo_url in VideoUrl.objects(uploaded=False):
-        filepath = download_video(vdeo_url.url)
+    for video_url in VideoUrl.objects(uploaded=False):
+        filepath = download_video(video_url.url)
         uploader(filepath)
 
 
